@@ -30,6 +30,8 @@ jobs:
           Rscript -e "install.packages('remotes')"
           Rscript -e "install.packages(c('testthat','RCurl','questionr'))"
           Rscript -e "questionr::qscan(list.files(pattern='*.R',recursive=T), load = TRUE, detail = FALSE)"
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
       - name: Render and publish to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
         with:
