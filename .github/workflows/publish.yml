@@ -28,6 +28,8 @@ jobs:
           gh release download --repo github.com/quarto-dev/quarto-cli --pattern *linux-amd64.deb
           version=$(curl https://quarto.org/docs/download/_download.json | jq -r '.version')
           echo "version=${version}" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Install Package Dependencies
