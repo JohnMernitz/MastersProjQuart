@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     container: rocker/geospatial:latest
     steps:
-      - name: set up gh cli
+      - name: Install github CLI tools following https://github.com/cli/cli/blob/trunk/docs/install_linux.md
         run: |-
           (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y))
           sudo mkdir -p -m 755 /etc/apt/keyrings
