@@ -2,9 +2,9 @@ on:
   push:
     branches:
       - main
-  permissions:
-     contents: write
-     pages: write
+permissions:
+  contents: write
+  pages: write
   name: Render and Publish
 
 jobs:
