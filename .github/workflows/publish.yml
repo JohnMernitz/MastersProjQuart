@@ -15,7 +15,7 @@ jobs:
     container: rocker/geospatial:latest
     steps:
       - name: Set up GitHub CLI
-        uses: actions/setup-gh@v1
+        uses: actions/setup-gh
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check out repository
