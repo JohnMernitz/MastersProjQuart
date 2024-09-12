@@ -25,11 +25,6 @@ jobs:
           sudo apt install gh -y
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # From https://github.com/r-lib/actions/tree/v2-branch/setup-r
       - name: Install Package Dependencies
         run: |-
           Rscript -e "install.packages('remotes')"
