@@ -15,9 +15,9 @@ jobs:
     container: rocker/geospatial:latest
     steps:
       - name: Set up GitHub CLI
-        uses: actions/setup-gh
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/setup-gh@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Check out repository
         uses: actions/checkout@v4
       - name: Set up Quarto
