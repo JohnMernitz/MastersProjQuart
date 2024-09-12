@@ -4,15 +4,16 @@ on:
       - main
       - master
 
+permissions:
+  contents: write
+  pages: write
+
 name: Render and Publish
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     container: rocker/geospatial:latest
-    permissions:
-     contents: write
-     pages: write
     steps:
       - name: Install github CLI tools following https://github.com/cli/cli/blob/trunk/docs/install_linux.md
         run: |-
