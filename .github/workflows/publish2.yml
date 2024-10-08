@@ -25,8 +25,10 @@ jobs:
       - name: Install Package Dependencies
         run: |-
           Rscript -e "install.packages('remotes')"
-          Rscript -e "install.packages(c('testthat','RCurl','questionr','kableExtra','rmarkdown'))"
+          Rscript -e "install.packages(c('testthat','RCurl','questionr','kableExtra','rmarkdown','tidyverse'))"
           Rscript -e "questionr::qscan(list.files(pattern='*.R',recursive=T), load = TRUE, detail = FALSE)"
+          Rscript -e "questionr::qscan(list.files(pattern='*.r',recursive=T), load = TRUE, detail = FALSE)"
+          Rscript -e "questionr::qscan(list.files(pattern='*.qmd',recursive=T), load = TRUE, detail = FALSE)"
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
