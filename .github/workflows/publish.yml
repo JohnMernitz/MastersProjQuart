@@ -27,12 +27,10 @@ jobs:
           sudo apt install -y jq
       - name: Check out repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Install Package Dependencies
         run: |-
           Rscript -e "install.packages('remotes')"
-          Rscript -e "install.packages(c('testthat','RCurl','questionr'))"
+          Rscript -e "install.packages(c('testthat','RCurl','questionr','kableExtra'))"
           Rscript -e "questionr::qscan(list.files(pattern='*.R',recursive=T), load = TRUE, detail = FALSE)"
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
