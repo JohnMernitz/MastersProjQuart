@@ -22,6 +22,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup R       # From https://github.com/r-lib/actions/tree/v2-branch/setup-r
         uses: r-lib/actions/setup-r@v2
+      - name: Install Package Dependencies
+        run: |-
+          Rscript -e "install.packages('remotes')"
+          Rscript -e "install.packages(c('testthat','RCurl','questionr','kableExtra','rmarkdown'))"
+          Rscript -e "questionr::qscan(list.files(pattern='*.R',recursive=T), load = TRUE, detail = FALSE)"
       - name: Publish to GitHub Pages (and render)
         uses: quarto-dev/quarto-actions/publish@v2
         with:
