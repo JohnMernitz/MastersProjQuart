@@ -4,10 +4,6 @@ on:
       - main
       - master
 
-permissions:
-  contents: write
-  pages: write
-
 name: Render and Publish
 
 jobs:
