@@ -48,6 +48,9 @@ Load any required packages in a code chunk (you may need to install some package
 library(tidyverse)
 library(leaflet)
 library(kableExtra)
+library(htmlwidgets)
+library(widgetframe)
+knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
 knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
 ```
 
@@ -94,6 +97,14 @@ m  # a map with the default OSM tile layer
 data %>% 
   ggplot(aes(x=x,y=y,col=category))+
   geom_point()
+```
+
+### Dygraphs Example
+
+```{r}
+library(dygraphs)
+dygraph(nhtemp, main = "New Haven Temperatures") |> 
+  dyRangeSelector(dateWindow = c("1920-01-01", "1960-01-01")) 
 ```
 
 # Conclusions

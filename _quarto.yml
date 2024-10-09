@@ -11,10 +11,6 @@ website:
 
 format:
   html:
-    theme: simplex  # choose your theme here: https://bootswatch.com/
-    toc: true
-    highlight: textmate
-    toc_depth: 2
+    theme: cosmo
     includes:
-      after_body: include/after_body.html
-    keep_md: false
+        after_body: include/after_body.html
