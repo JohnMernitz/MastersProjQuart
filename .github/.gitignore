@@ -1,1 +1,10 @@
-*.html
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+_site
+*cache
+*_files
+/.quarto/
+styles*
+widgets
