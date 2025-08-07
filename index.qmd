@@ -1,16 +1,23 @@
 ---
-title: "My Final Project Template"
-author: Your name here
-subtitle: Subtitle here if desired
+title: "Geographies of Native Plant Restoration"
+author: John Mernitz
+subtitle: Planting Selection Tool
 date: today
 date-format: long
+format:
+  html:
+    theme: 
+      light: minty
+      dark: minty
+    toc: true
+    toc-location: left
+    toc-title: "Contents"
+    code-fold: true
 ---
 
 # Introduction
 
-\[\~ 200 words\]
-
-Clearly stated background and questions / hypotheses / problems being addressed. Sets up the analysis in an interesting and compelling way. Include figures if you like.
+Welcome to the Plant Selection tool! If you would like to know more about this tool and its functionality, please check the about and code steps on the navbar above!
 
 # Materials and methods
 

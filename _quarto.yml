@@ -3,14 +3,22 @@ project:
 
 website:
   title: "Geographies of Native Plant Restoration"
+  page-footer:
+    center: >
+      This website is a product of John Mernitz under the guidance of <a href="https://wilsonlab.io"> Adam Wilson.</a>
+      It is the capstone for a M.S. in Geography, focus of Earth System Sciences, in the Department of Geography, University at Buffalo.
+      Geographies of Native Plant Restoration © 2025 by <a href="https://github.com/JohnMernitz">John Mernitz</a> is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
+      <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/sa.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
 
 format:
   html:
-    theme: cosmo
-    includes:
-        after_body: include/after_body.html
+    respect-user-color-scheme: true
+    theme:
+      light: minty
+      dark: minty
