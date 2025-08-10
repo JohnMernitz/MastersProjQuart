@@ -1,0 +1,46 @@
+---
+title: "Selector Functionality"
+author: John Mernitz
+subtitle: Methods and Process
+date: today
+date-format: long
+format:
+  html:
+    dark-mode: true
+    theme: 
+      light: minty
+      dark: minty
+    toc: true
+    toc-location: left
+    toc-title: "Contents"
+    code-fold: true
+---
+
+#Underlying Principles
+
+The shapefiles within this project are from the Town of Amherst's GIS division, and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrography and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority.
+
+#Database Organization
+
+The data in this project is currently a product of __, who allowed permission of its use in this project. The list of plants has the fields of common name, scientific name, color, width, height, water tolerance, bloom season, and sun requirements. 
+
+##Calling Data
+
+Data from the project are transformed into geojson for call expediency and ease of display.
+
+##Display
+
+
+
+#Site Aesthetics and Utility
+
+
+
+#Linked Paper
+
+
+
+#Citations
+
+
+
