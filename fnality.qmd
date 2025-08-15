@@ -11,9 +11,10 @@ format:
       light: minty
       dark: minty
     code-fold: true
+    toc: true
 ---
 
-#Underlying Principles
+# Underlying Principles
 
 The shapefiles within this project are from the Town of Amherst's GIS division, and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority.
 
