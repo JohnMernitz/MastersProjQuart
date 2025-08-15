@@ -35,3 +35,6 @@ format:
       light: minty
       dark: minty
     toc: false
+
+metadata:
+  sidebar: main_sidebar
