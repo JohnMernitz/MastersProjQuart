@@ -2,7 +2,7 @@
 title: "About Page"
 ---
 
-##**About this site**
+#**About this site**
 
 This site is currently a zero draft of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.
 
@@ -11,7 +11,7 @@ The aim of this project is to code a web interface which collects and processes 
 As this is a work in progress, data and suggestions described herein should be given further consideration should someone seek to use them.
 
 ##**Principles**
-
+  
 Ecosystem resilience requires a wide base to stand upon. Biodiversity, the many different plants and insects and animals that make up an ecosystem, are reliant on local conditions they have grown with over thousands of years. In the interest of increasing the ability of nature to resist change by humans, through land use and other means, it is vital that people be aware of native plants.
 
 The capacity to know and choose native plants for their gardens and homes is very important. Too often, the choice is made by nurseries and standard garden ideals that popular non-native plants sell best. Due to there being little alternative or little knowledge of them, native plants are not chosen. This project seeks to help with that.
