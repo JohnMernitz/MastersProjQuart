@@ -1,6 +1,9 @@
 project:
   type: website
 
+metadata:
+  sidebar: main_sidebar
+
 website:
   title: "Geographies of Native Plant Restoration"
   page-footer:
@@ -35,5 +38,3 @@ format:
       dark: minty
     toc: false
 
-metadata:
-  sidebar: main_sidebar
