@@ -17,11 +17,11 @@ format:
 
 The shapefiles within this project are from the Town of Amherst's GIS division, and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority.
 
-#Database Organization
+# Database Organization
 
 The plants data in this project is currently a product of David Werier and the New York Flora Association, who allowed permission of its use in this project. Plants therein are those documented by NYFA in their Atlas project as native to Erie County, albeit acknowledging that their list is not complete. The list of plants has the fields of scientific name, common name,family, genus, species, infraspecies, Coefficient of Conservatism, State Status, National Wetland Plant List code for Northcentral and Northeast, State Rank, Global Rank, Habitat, Growth Habit, and Duration. 
 
-##Data Management
+## Data Management
 
 The data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned. 
 ```{r}
@@ -49,23 +49,23 @@ Values should be assigned to the wetland codes of the plants, to better qualify 
 
 Another few splits should be added here to partition plants which require more wet and more dry conditions.
 
-##Calling Data
+## Calling Data
 
 Layer files from the project are transformed into geojson for call expediency and ease of display.
 
-##Display
+## Display
 
 
 
-#Site Aesthetics and Utility
+# Site Aesthetics and Utility
 
 
 
-#Linked Paper
+# Linked Paper
 
 
 
-#Citations
+# Citations
 
 
 
