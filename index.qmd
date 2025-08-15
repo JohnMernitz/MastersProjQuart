@@ -20,9 +20,12 @@ format:
 
 Welcome to the Plant Selection tool! If you would like to know more about this tool and its functionality, please check the about and code steps on the navbar above!
 
+Again, this plant selector is not fully tested, plants should be carefully considered if they are appropriate for one's needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!
+
+Suggestions are organized by hydrologic and wetland proximity, annual or perennial, and by growth type.
+
 # Leaflet Test Map
 
-Refer to output in your narrative like this: x=`r x` .
 
 
 ```{r, message=F, warning=F}
