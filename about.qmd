@@ -1,8 +1,6 @@
 ---
-title: "About Page"
+title: "About This Site"
 ---
-
-# **About this site**
 
 This site is currently a zero draft of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.
 
