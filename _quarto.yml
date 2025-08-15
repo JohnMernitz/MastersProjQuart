@@ -24,8 +24,7 @@ website:
         background: "light"
         align: "left"
         contents:
-          - text: "Page Content"
-            toc: true
+          - toc: true
             depth: 3
 format:
   html:
