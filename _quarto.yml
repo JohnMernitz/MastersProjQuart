@@ -13,6 +13,8 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - href: fnality.qmd
+        text: Functionality
       - href: about.qmd
         text: About
 
