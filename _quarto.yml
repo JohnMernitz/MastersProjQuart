@@ -17,7 +17,16 @@ website:
         text: Functionality
       - href: about.qmd
         text: About
-
+  sidebar:
+      - id: main_sidebar
+        title: "This Page"
+        style: "docked"
+        background: "light"
+        align: "left"
+        contents:
+          - text: "Page Content"
+            toc: true
+            depth: 3
 format:
   html:
     respect-user-color-scheme: true
@@ -25,3 +34,4 @@ format:
     theme:
       light: minty
       dark: minty
+    toc: false

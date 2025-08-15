@@ -10,9 +10,6 @@ format:
     theme: 
       light: minty
       dark: minty
-    toc: true
-    toc-location: left
-    toc-title: "Contents"
     code-fold: true
 ---
 

@@ -11,9 +11,6 @@ format:
       light: minty
       dark: minty
     toc: true
-    toc-location: left
-    toc-title: "Contents"
-    code-fold: true
 ---
 
 # Introduction
@@ -24,9 +21,7 @@ Again, this plant selector is not fully tested, plants should be carefully consi
 
 Suggestions are organized by hydrologic and wetland proximity, annual or perennial, and by growth type.
 
-# Leaflet Test Map
-
-
+# Leaflet Map
 
 ```{r, message=F, warning=F}
 library(tidyverse)
