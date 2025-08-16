@@ -30,6 +30,7 @@ library(leaflet)
 library(kableExtra)
 library(htmlwidgets)
 library(widgetframe)
+install.packages("DT")
 library(DT)
 knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
 knitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling
