@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="John Mernitz">
-<meta name="dcterms.date" content="2025-08-15">
+<meta name="dcterms.date" content="2025-08-16">
 
 <title>Geographies of Native Plant Restoration</title>
 <style>
@@ -390,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 15, 2025</p>
+      <p class="date">August 16, 2025</p>
     </div>
   </div>
   
@@ -411,6 +411,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="leaflet-map" class="level1">
 <h1>Leaflet Map</h1>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
@@ -418,10 +420,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(widgetframe)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">widgetframe_widgets_dir =</span> <span class="st">'widgets'</span> ) </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">cache=</span><span class="cn">TRUE</span>)  <span class="co"># cache the results for quick compiling</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="download-and-clean-all-required-data" class="level2">
 <h2 class="anchored" data-anchor-id="download-and-clean-all-required-data">Download and clean all required data</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">=</span><span class="dv">20</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="ot">=</span><span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">runif</span>(n,<span class="sc">-</span><span class="dv">180</span>,<span class="dv">180</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">y=</span><span class="fu">runif</span>(n,<span class="sc">-</span><span class="dv">60</span>,<span class="dv">60</span>),</span>
@@ -430,12 +435,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>], n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                  ),</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">value =</span> <span class="fu">rnorm</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">%&gt;%</span> <span class="co">#show only 1:n rows</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">2</span>,<span class="at">align=</span><span class="st">"c"</span>)<span class="sc">%&gt;%</span> <span class="co">#make table and round to two digits</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> </span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>)) <span class="co">#apply other formatting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed caption-top" data-quarto-postprocess="true">
 <thead>
@@ -449,87 +458,90 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">-106.54</td>
-<td style="text-align: center;">10.96</td>
-<td style="text-align: center;">15.20</td>
+<td style="text-align: center;">42.55</td>
+<td style="text-align: center;">-49.68</td>
+<td style="text-align: center;">13.20</td>
 <td style="text-align: center;">d</td>
-<td style="text-align: center;">1.03</td>
+<td style="text-align: center;">0.85</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">-33.61</td>
-<td style="text-align: center;">-29.65</td>
-<td style="text-align: center;">11.62</td>
-<td style="text-align: center;">b</td>
-<td style="text-align: center;">0.26</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">15.14</td>
-<td style="text-align: center;">15.38</td>
-<td style="text-align: center;">15.71</td>
-<td style="text-align: center;">b</td>
-<td style="text-align: center;">-0.44</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">117.02</td>
-<td style="text-align: center;">20.91</td>
-<td style="text-align: center;">11.72</td>
-<td style="text-align: center;">d</td>
-<td style="text-align: center;">-0.03</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">-9.15</td>
-<td style="text-align: center;">46.06</td>
-<td style="text-align: center;">12.57</td>
-<td style="text-align: center;">d</td>
-<td style="text-align: center;">-0.09</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">32.44</td>
-<td style="text-align: center;">-24.15</td>
-<td style="text-align: center;">11.45</td>
+<td style="text-align: center;">-6.87</td>
+<td style="text-align: center;">4.68</td>
+<td style="text-align: center;">17.75</td>
 <td style="text-align: center;">c</td>
-<td style="text-align: center;">1.02</td>
+<td style="text-align: center;">-0.47</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">160.59</td>
-<td style="text-align: center;">-41.30</td>
-<td style="text-align: center;">18.72</td>
+<td style="text-align: center;">53.60</td>
+<td style="text-align: center;">-12.24</td>
+<td style="text-align: center;">12.68</td>
+<td style="text-align: center;">d</td>
+<td style="text-align: center;">-0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">110.20</td>
+<td style="text-align: center;">-53.10</td>
+<td style="text-align: center;">15.42</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">0.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">-9.58</td>
+<td style="text-align: center;">43.61</td>
+<td style="text-align: center;">13.38</td>
 <td style="text-align: center;">a</td>
-<td style="text-align: center;">0.63</td>
+<td style="text-align: center;">-1.35</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">-154.80</td>
-<td style="text-align: center;">-1.13</td>
-<td style="text-align: center;">8.43</td>
-<td style="text-align: center;">c</td>
-<td style="text-align: center;">2.72</td>
+<td style="text-align: center;">107.62</td>
+<td style="text-align: center;">7.55</td>
+<td style="text-align: center;">18.05</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">-1.47</td>
 </tr>
 <tr class="odd">
-<td style="text-align: center;">-179.27</td>
-<td style="text-align: center;">32.03</td>
-<td style="text-align: center;">17.02</td>
-<td style="text-align: center;">e</td>
-<td style="text-align: center;">1.09</td>
+<td style="text-align: center;">-52.01</td>
+<td style="text-align: center;">-24.80</td>
+<td style="text-align: center;">9.09</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">0.02</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">46.96</td>
-<td style="text-align: center;">-49.05</td>
-<td style="text-align: center;">10.72</td>
+<td style="text-align: center;">163.28</td>
+<td style="text-align: center;">46.71</td>
+<td style="text-align: center;">7.82</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: center;">1.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">-64.21</td>
+<td style="text-align: center;">-28.57</td>
+<td style="text-align: center;">6.81</td>
 <td style="text-align: center;">b</td>
-<td style="text-align: center;">0.88</td>
+<td style="text-align: center;">-2.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">132.89</td>
+<td style="text-align: center;">-42.20</td>
+<td style="text-align: center;">16.20</td>
+<td style="text-align: center;">d</td>
+<td style="text-align: center;">0.05</td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">leaflet</span>(data) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addCircleMarkers</span>(<span class="sc">~</span>x, <span class="sc">~</span>y, <span class="at">radius =</span> <span class="sc">~</span>size,<span class="at">color =</span> <span class="sc">~</span><span class="fu">as.factor</span>(category)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addPopups</span>(<span class="sc">~</span>x[<span class="dv">2</span>], <span class="sc">~</span>y[<span class="dv">2</span>], <span class="st">"Random popup"</span>)</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>m  <span class="co"># a map with the default OSM tile layer</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="leaflet html-widget html-fill-item" id="htmlwidget-82fa8497deb95a8afa02" style="width:100%;height:325px;"></div>
-<script type="application/json" data-for="htmlwidget-82fa8497deb95a8afa02">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[10.95955392345786,-29.64582572691143,15.37889189086854,20.9079213347286,46.06258783489466,-24.14854765869677,-41.29889013245702,-1.129218880087137,32.0326529815793,-49.04884622432292,-8.197424272075295,51.35974173434079,34.65474145486951,30.54750812239945,43.08937811292708,-21.28543088212609,20.16786005347967,-24.23445629887283,17.37161359749734,54.75666141137481],[-106.5367249958217,-33.61323424614966,15.14265172183514,117.0244759786874,-9.14664345793426,32.4385826010257,160.585313430056,-154.8030581139028,-179.2677819170058,46.96034559980035,-149.8856647498906,-165.7791468221694,-164.4508818816394,134.7070384025574,108.9921860117465,111.7336861789227,52.04506262205541,-168.6645732354373,-103.5140474326909,-57.33110625296831],[15.19561612745747,11.62018388742581,15.71331977378577,11.72019510762766,12.57455915561877,11.45271111861803,18.71967236860655,8.429749017814174,17.0191809698008,10.72429427062161,13.63656905130483,9.580147849628702,9.160966385388747,5.686010658973828,17.78308931738138,17.57353203603998,6.060062524629757,15.55231350008398,18.77039312268607,7.808538946555927],null,null,{"interactive":true,"className":"","stroke":true,"color":["d","b","b","d","d","c","a","c","e","b","c","c","e","d","e","b","d","c","e","e"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["d","b","b","d","d","c","a","c","e","b","c","c","e","d","e","b","d","c","e","e"],"fillOpacity":0.2},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPopups","args":[-29.64582572691143,-33.61323424614966,"Random popup",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"limits":{"lat":[-49.04884622432292,54.75666141137481],"lng":[-179.2677819170058,160.585313430056]}},"evals":[],"jsHooks":[]}</script>
+<div class="leaflet html-widget html-fill-item" id="htmlwidget-6b86f6a732b1c44074ef" style="width:100%;height:325px;"></div>
+<script type="application/json" data-for="htmlwidget-6b86f6a732b1c44074ef">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org/copyright/\">OpenStreetMap<\/a>,  <a href=\"https://opendatacommons.org/licenses/odbl/\">ODbL<\/a>"}]},{"method":"addCircleMarkers","args":[[-49.67557679861784,4.67516147531569,-12.24406865425408,-53.09619471430779,43.60750755295157,7.552710296586156,-24.80418557301164,46.71338276937604,-28.5686919093132,-42.19873300753534,42.08056876435876,39.69133685342968,-58.15196022391319,-3.268655128777027,-59.35906140133739,-30.66290913149714,13.90891634859145,-20.49367510713637,-17.25850517861545,-8.761284565553069],[42.54940618760884,-6.866653310135007,53.60042634420097,110.2002478390932,-9.577369010075927,107.6177111361176,-52.01299471780658,163.2753687445074,-64.21158660203218,132.8918673656881,68.67733804509044,-178.4238417819142,-71.87958262860775,-90.64450272358954,82.10766895674169,96.45613485015929,166.4165023807436,-172.0261476561427,110.2061102259904,85.02279438078403],[13.20029684109613,17.74700973299332,12.6837346109096,15.41563873877749,13.3829652145505,18.05031738593243,9.09257133025676,7.818130637751892,6.809013292659074,16.19914474431425,8.470991760259494,7.742100384784862,14.35923914075829,18.7938375887461,19.56008525914513,13.67463710601442,5.266461798455566,6.026488783536479,16.09598611947149,14.89103432744741],null,null,{"interactive":true,"className":"","stroke":true,"color":["d","c","d","c","a","b","b","c","b","d","e","b","c","e","b","a","a","e","a","d"],"weight":5,"opacity":0.5,"fill":true,"fillColor":["d","c","d","c","a","b","b","c","b","d","e","b","c","e","b","a","a","e","a","d"],"fillOpacity":0.2},null,null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addPopups","args":[4.67516147531569,-6.866653310135007,"Random popup",null,null,{"maxWidth":300,"minWidth":50,"autoPan":true,"keepInView":false,"closeButton":true,"className":""}]}],"limits":{"lat":[-59.35906140133739,46.71338276937604],"lng":[-178.4238417819142,166.4165023807436]}},"evals":[],"jsHooks":[]}</script>
 <p>Map of completely random data</p>
 </div>
 </div>
