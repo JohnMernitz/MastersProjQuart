@@ -20,15 +20,15 @@ website:
         text: Functionality
       - href: about.qmd
         text: About
-  sidebar:
-      - id: main_sidebar
-        title: "This Page"
-        style: "docked"
-        background: "light"
-        align: "left"
-        contents:
-          - toc: true
-            depth: 3
+#  sidebar:
+#      - id: main_sidebar
+#        title: "This Page"
+#        style: "docked"
+#        background: "light"
+#        align: "left"
+#        contents:
+#          - toc: true
+#            depth: 3
 format:
   html:
     respect-user-color-scheme: true

@@ -22,7 +22,7 @@ Again, this plant selector is not fully tested, plants should be carefully consi
 
 Suggestions are organized by hydrologic and wetland proximity, annual or perennial, and by growth type.
 
-# Leaflet Map
+# Libraries
 
 ```{r, message=F, warning=F, results=F}
 library(tidyverse)
@@ -30,11 +30,31 @@ library(leaflet)
 library(kableExtra)
 library(htmlwidgets)
 library(widgetframe)
+library(DT)
 knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
-knitr::opts_chunk$set(cache=TRUE)  # cache the results for quick compiling
+knitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling
 ```
 
-## Download and clean all required data
+# Plant Selector
+
+![Curtesy of USACE Definitions, used analogous to water tolerance.](data/Wetland_Codes.png)
+
+```{r}
+native_plants <- read.csv("data/common_plants.csv")
+
+#Here we'll edit the columns so not as much data needs to be loaded
+
+native2 <- native_plants[,c("Scientific_Name", "Common_Name", "CoC", "nwpl_ncne", "Growth_Habit", "Duration")]
+
+#Now we have fewer columns, let's edit the column names so it's more clear what each refers to
+
+datatable(
+  native2,
+  colnames = c('Scientific Name' = 2, 'Common Name' = 3,'Difficulty' = 4, 'Wetland Status' = 5, 'Growth Type' = 6), 
+  filter = 'top',
+  options = list(pagelength=5)
+  )
+```
 
 ```{r}
 n=20
@@ -57,7 +77,7 @@ data %>%
 
 ```{r, fig.width=6, fig.height=3, fig.cap="Map of completely random data"}
 m <- leaflet(data) %>% 
-  addTiles() %>% 
+  addTiles() %>% #Openstreetmaps default
   addCircleMarkers(~x, ~y, radius = ~size,color = ~as.factor(category)) %>% 
   addPopups(~x[2], ~y[2], "Random popup")
 m  # a map with the default OSM tile layer

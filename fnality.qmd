@@ -44,9 +44,11 @@ threatened_plants <- plant_data %>%
 #second filter for threatened plant species
 ```
 
-Values should be assigned to the wetland codes of the plants, to better qualify their need for water.
+Now we have a list of common plants we can export to csv.
 
-Another few splits should be added here to partition plants which require more wet and more dry conditions.
+```{r, message=F, warning=F, results=F}
+write.csv(common_plants,"data/common_plants.csv", row.names = FALSE)
+```
 
 ## Calling Data
 
