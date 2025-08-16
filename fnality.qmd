@@ -2,8 +2,6 @@
 title: "Selector Functionality"
 author: John Mernitz
 subtitle: Methods and Process
-date: today
-date-format: long
 format:
   html:
     dark-mode: true

@@ -1,6 +1,15 @@
 ---
 title: "About This Site"
-  toc: true
+author: John Mernitz
+subtitle: Planting Selection Tool
+format:
+  html:
+    dark-mode: true
+    theme: 
+      light: minty
+      dark: minty
+    code-fold: true
+    toc: true
 ---
 
 This site is currently a zero draft of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.
