@@ -20,9 +20,9 @@ Welcome to the Plant Selection tool! If you would like to know more about this t
 
 Again, this plant selector is not fully tested, plants should be carefully considered if they are appropriate for one's needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!
 
-Suggestions are organized by hydrologic and wetland proximity, annual or perennial, and by growth type.
+Suggestions are organized by species, common name, wetland status, growth type, and duration.
 
-# Libraries
+## Libraries
 
 ```{r, message=F, warning=F, results=F}
 library(tidyverse)
@@ -38,7 +38,7 @@ knitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling
 
 # Plant Selector
 
-![Curtesy of USACE Definitions, used analogous to water tolerance.](data/Wetland_Codes.png)
+**Please use the search bars in any column to filter your data!**
 
 ```{r}
 native_plants <- read.csv("data/common_plants.csv")
@@ -56,6 +56,16 @@ datatable(
   options = list(pagelength=5)
   )
 ```
+
+**Take note of the Wetland Codes below!**
+
+![Figure curtesy of USACE, Wetland Status is used for water tolerance in this selector.](data/Wetland_Codes.png)
+
+
+
+# Map Selector
+
+This section will allow users to view local wetlands and water features!
 
 ```{r}
 n=20
