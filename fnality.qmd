@@ -25,7 +25,7 @@ The plants data in this project is currently a product of David Werier and the N
 ## Data Management
 
 The data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned. 
-```{r}
+```{r, message=F, warning=F, results=F}
 library(tidyverse)
 plant_data <- read.csv("data/Copy_NYFA_Erie_Native_pared.csv")
 #Downloading data
@@ -33,7 +33,7 @@ plant_data <- read.csv("data/Copy_NYFA_Erie_Native_pared.csv")
 
 This first section divides the data based on threat status. Extirpated plants should be removed as well.
 
-```{r}
+```{r, message=F, warning=F, results=F}
 plant_data <- plant_data %>%
   filter(plant_data[,14] != "SX")
          

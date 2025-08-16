@@ -24,7 +24,7 @@ Suggestions are organized by hydrologic and wetland proximity, annual or perenni
 
 # Leaflet Map
 
-```{r, message=F, warning=F}
+```{r, message=F, warning=F, results=F}
 library(tidyverse)
 library(leaflet)
 library(kableExtra)
