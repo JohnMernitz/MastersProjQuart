@@ -59,7 +59,7 @@ datatable(
 
 **Take note of the Wetland Codes below!**
 
-![Figure curtesy of USACE, Wetland Status is used for water tolerance in this selector.](data/Wetland_Codes.png)
+![Figure curtesy of USACE, Wetland Status is used for water tolerance in this selector.](data/Wetland_codes.png)
 
 
 
