@@ -32,6 +32,8 @@ library(htmlwidgets)
 library(widgetframe)
 install.packages("DT")
 library(DT)
+library(sf)
+library(mapview)
 knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
 knitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling
 ```
@@ -68,14 +70,13 @@ datatable(
 This section will allow users to view local wetlands and water features!
 
 ```{r}
-n=20
-data=data.frame(x=runif(n,-180,180),
-                y=runif(n,-60,60),
-                size = runif(n, 5, 20),
-                category = factor(
-                  sample(letters[1:5], n, replace = TRUE)
-                  ),
-                value = rnorm(n))
+ditches <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download")
+town_bound <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1WScoYQWLa9_jaobUhm-0xcf1MtTaqoE6&export=download")
+state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaWLGhwGyYHnhkBxn8RZRlwNFkk&export=download")
+#Wetland makes up 20.2228% of area of Amherst NY
+soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download")
+nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
+hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
 ```
 
 ```{r, results='asis'}
@@ -92,4 +93,17 @@ m <- leaflet(data) %>%
   addCircleMarkers(~x, ~y, radius = ~size,color = ~as.factor(category)) %>% 
   addPopups(~x[2], ~y[2], "Random popup")
 m  # a map with the default OSM tile layer
+```
+
+```{r, fig.width=6, fig.heigt=3, fig.cap="Temp Map of Wetland Files"}
+#    m <- m %>%
+#      addGeoJSON(town_bound, group = "Amherst Boundary", stroke = TRUE, color = "blue", weight = 3) %>%
+#      addGeoJSON(state_wetld, group = "State Wetland", fillOpacity = 0.5, fillColor = "red") %>%
+#      addGeoJSON(soils_C ,group = "Soil Types", fillOpacity = 0.5, fillColor = "green")
+#    m <- m %>%
+#      addLayersControl(
+#        baseGroups = c("OSM (default)"), # If you have base layers
+#        overlayGroups = c("Layer 1", "Layer 2"),
+#        options = layersControlOptions(collapsed = FALSE)
+#      )
 ```
