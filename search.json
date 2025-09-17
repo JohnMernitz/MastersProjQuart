@@ -14,11 +14,18 @@
     "text": "Code\nlibrary(tidyverse)\nlibrary(leaflet)\nlibrary(kableExtra)\nlibrary(htmlwidgets)\nlibrary(widgetframe)\ninstall.packages(\"DT\")\nlibrary(DT)\nknitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) \nknitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling"
   },
   {
-    "objectID": "data/Readme.html",
-    "href": "data/Readme.html",
-    "title": "Geographies of Native Plant Restoration",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About This Site",
     "section": "",
-    "text": "Place any data needed by your analysis in this folder. Please do not store large files here. Then read in any data using the ‘data’ path. For example, read_csv(\"data/data.csv\")."
+    "text": "This site is the current iteration of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.\nThe aim of this project is to code a web interface which collects and processes environmental information based on user input and return suitable guidance for site-specific native plant restoration.\nAs this is a work in progress, data and suggestions described herein should be given further consideration should someone seek to use them."
+  },
+  {
+    "objectID": "about.html#principles",
+    "href": "about.html#principles",
+    "title": "About This Site",
+    "section": "Principles",
+    "text": "Principles\nA strong and healthy ecosystem needs in part a wide base to stand upon. Biodiversity, the range of many different plants and insects and animals that make up an ecosystem, is that base. Each creature relies on local conditions and roles which they have grown with for thousands of years. When one fails, another is ready to step into that role to continue ecosystem function. In the interest of increasing the ability of nature to resist change by humans, through land use and other means, it is vital that people do their part to increase biodiversity.\nThe capacity to know and choose native plants for property owners’ lands and homes is very important for local biodiversity. Too often, the choice is made by nurseries and standard garden plans that popular non-native plants sell best. Due to there being few alternatives or less clear knowledge of them, native plants are not chosen. This project’s code seeks to help users with that.\nWith coding and appropriate computer data storage, creating a tool which can act as a skeleton for repeated user questions is possible. The Native Plant Finder is an attempt to construct a template site that can be copied in any other location. Ideally, just changing base files and plant data will allow user experiences to be similar, like a bookshelf with different books on it. This puts decisions in people’s hands, letting them make choices with local information."
   },
   {
     "objectID": "fnality.html",
@@ -49,17 +56,10 @@
     "text": "Display"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About This Site",
+    "objectID": "data/Readme.html",
+    "href": "data/Readme.html",
+    "title": "Geographies of Native Plant Restoration",
     "section": "",
-    "text": "This site is the current iteration of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.\nThe aim of this project is to code a web interface which collects and processes environmental information based on user input and return suitable guidance for site-specific native plant restoration.\nAs this is a work in progress, data and suggestions described herein should be given further consideration should someone seek to use them."
-  },
-  {
-    "objectID": "about.html#principles",
-    "href": "about.html#principles",
-    "title": "About This Site",
-    "section": "Principles",
-    "text": "Principles\nA strong and healthy ecosystem needs in part a wide base to stand upon. Biodiversity, the range of many different plants and insects and animals that make up an ecosystem, is that base. Each creature relies on local conditions and roles which they have grown with for thousands of years. When one fails, another is ready to step into that role to continue ecosystem function. In the interest of increasing the ability of nature to resist change by humans, through land use and other means, it is vital that people do their part to increase biodiversity.\nThe capacity to know and choose native plants for property owners’ lands and homes is very important for local biodiversity. Too often, the choice is made by nurseries and standard garden plans that popular non-native plants sell best. Due to there being few alternatives or less clear knowledge of them, native plants are not chosen. This project’s code seeks to help users with that.\nWith coding and appropriate computer data storage, creating a tool which can act as a skeleton for repeated user questions is possible. The Native Plant Finder is an attempt to construct a template site that can be copied in any other location. Ideally, just changing base files and plant data will allow user experiences to be similar, like a bookshelf with different books on it. This puts decisions in people’s hands, letting them make choices with local information."
+    "text": "Place any data needed by your analysis in this folder. Please do not store large files here. Then read in any data using the ‘data’ path. For example, read_csv(\"data/data.csv\")."
   }
 ]
