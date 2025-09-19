@@ -12,6 +12,8 @@ format:
       dark: minty
     code-fold: true
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Introduction
@@ -34,8 +36,9 @@ install.packages("DT")
 library(DT)
 library(sf)
 library(mapview)
+library(leafem)
 knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
-knitr::opts_chunk$set(cache=TRUE)  # cached results for quick compiling
+knitr::opts_chunk$set(cache=FALSE)  # cached results for quick compiling
 ```
 
 # Plant Selector
@@ -77,33 +80,38 @@ state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaW
 soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download")
 nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
 hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
-```
 
-```{r, results='asis'}
-data %>% 
-  slice(1:10) %>% #show only 1:n rows
-  kable(digits=2,align="c")%>% #make table and round to two digits
-  kable_styling(bootstrap_options = 
-                  c("striped", "hover", "condensed", "responsive")) #apply other formatting
-```
+#Download.file()
+#Save to tempdata folder
 
-```{r, fig.width=6, fig.height=3, fig.cap="Map of completely random data"}
-m <- leaflet(data) %>% 
-  addTiles() %>% #Openstreetmaps default
-  addCircleMarkers(~x, ~y, radius = ~size,color = ~as.factor(category)) %>% 
-  addPopups(~x[2], ~y[2], "Random popup")
-m  # a map with the default OSM tile layer
+town_bound <- st_transform(town_bound, crs = 4326)
+state_wetld <- st_transform(state_wetld, crs = 4326)
+soils_C <- st_transform(soils_C, crs = 4326)
+ditches <- st_transform(ditches, crs = 4326)
+nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
+hydro_cl <- st_transform(hydro_cl, crs = 4326)
 ```
 
 ```{r, fig.width=6, fig.heigt=3, fig.cap="Temp Map of Wetland Files"}
-#    m <- m %>%
-#      addGeoJSON(town_bound, group = "Amherst Boundary", stroke = TRUE, color = "blue", weight = 3) %>%
-#      addGeoJSON(state_wetld, group = "State Wetland", fillOpacity = 0.5, fillColor = "red") %>%
-#      addGeoJSON(soils_C ,group = "Soil Types", fillOpacity = 0.5, fillColor = "green")
-#    m <- m %>%
-#      addLayersControl(
-#        baseGroups = c("OSM (default)"), # If you have base layers
-#        overlayGroups = c("Layer 1", "Layer 2"),
-#        options = layersControlOptions(collapsed = FALSE)
-#      )
+m <- leaflet(town_bound) %>%
+  addTiles() %>% # Add a default base layer
+  addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
+  addPolygons(data = state_wetld, group = "State Wetland", fillOpacity = 0.5, fillColor = "green") %>%
+  addPolygons(data = soils_C, group = "Soil Types", fillOpacity = 0.5, fillColor = "brown") %>%
+  addPolygons(data = nysnh_cl, group = "Significant Wetland", fillOpacity = 0.5, fillColor = "yellow") %>%
+  addPolygons(data = hydro_cl, group = "Hydrology", fillOpacity = 0.5, fillColor = "blue") %>%
+  addPolygons(data = ditches, group = "Ditches", fillOpacity = 0.5, fillColor = "red") #%>%
+#  addHomeButton(
+#    ext = town_bound,
+#    group = "Home",
+#    position = "bottomright"
+#  ) %>%
+#  addLayersControl(
+#    baseGroups = c("OSM (default)"),
+#    overlayGroups = c("Amherst Boundary", "State Wetland", "Soil Types", "Significant Wetland", "Hydrology", "Ditches"),
+#    options = layersControlOptions(collapsed = FALSE)
+#  )
+
+m
+
 ```

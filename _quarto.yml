@@ -32,9 +32,10 @@ website:
 format:
   html:
     respect-user-color-scheme: true
-    dark-mode: true
     theme:
       light: minty
       dark: minty
+    code-block-bg: "gray" # Gray background
+    dark-mode: true
     toc: false
 
