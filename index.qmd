@@ -37,8 +37,9 @@ library(DT)
 library(sf)
 library(mapview)
 library(leafem)
+library(terra)
 knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
-knitr::opts_chunk$set(cache=FALSE)  # cached results for quick compiling
+knitr::opts_chunk$set(cache=FALSE)  # cached results off
 ```
 
 # Plant Selector
@@ -80,6 +81,7 @@ state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaW
 soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download")
 nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
 hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
+wetldsum <- rast("data/WtldSumVal1_8.tif")
 
 #Download.file()
 #Save to tempdata folder
@@ -90,27 +92,38 @@ soils_C <- st_transform(soils_C, crs = 4326)
 ditches <- st_transform(ditches, crs = 4326)
 nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
 hydro_cl <- st_transform(hydro_cl, crs = 4326)
+wetldsum <- project(wetldsum, "EPSG:4326")
+
+soil_names <- (unique(soils_C$SOIL_NAME))
+wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
+soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
 ```
 
-```{r, fig.width=6, fig.heigt=3, fig.cap="Temp Map of Wetland Files"}
+```{r, fig.width=6, fig.heigt=3, fig.cap="Map of Wetland Files"}
 m <- leaflet(town_bound) %>%
   addTiles() %>% # Add a default base layer
   addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
-  addPolygons(data = state_wetld, group = "State Wetland", fillOpacity = 0.5, fillColor = "green") %>%
-  addPolygons(data = soils_C, group = "Soil Types", fillOpacity = 0.5, fillColor = "brown") %>%
-  addPolygons(data = nysnh_cl, group = "Significant Wetland", fillOpacity = 0.5, fillColor = "yellow") %>%
-  addPolygons(data = hydro_cl, group = "Hydrology", fillOpacity = 0.5, fillColor = "blue") %>%
-  addPolygons(data = ditches, group = "Ditches", fillOpacity = 0.5, fillColor = "red") #%>%
+  addPolygons(data = state_wetld, group = "State Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "green") %>%
+  addPolygons(data = soils_C, group = "Soil Types", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,
+    highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = FALSE)) %>%
+  addPolygons(data = nysnh_cl, group = "Significant Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "yellow") %>%
+  addPolygons(data = hydro_cl, group = "Hydrology", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "blue") %>%
+  addPolygons(data = ditches, group = "Ditches", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "red") %>%
 #  addHomeButton(
 #    ext = town_bound,
 #    group = "Home",
 #    position = "bottomright"
 #  ) %>%
-#  addLayersControl(
-#    baseGroups = c("OSM (default)"),
-#    overlayGroups = c("Amherst Boundary", "State Wetland", "Soil Types", "Significant Wetland", "Hydrology", "Ditches"),
-#    options = layersControlOptions(collapsed = FALSE)
-#  )
+  addRasterImage(wetldsum, group = "Wetland Proximity Values", colors = wetldsumpal, opacity = 0.8) %>%
+  #addImageQuery(wetldsum, project = TRUE, layerId = "Wetldsum", position = "top") %>%
+  addLegend(pal = wetldsumpal, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
+  #addLegend(pal = soils_pal, values = soils_C$SOIL_NAME, title = "Soil Types", position = "bottomright", opacity = 1)
+  #addImageQuery(wetldsum, type = "mousemove", digits = 2) %>%
+  addLayersControl(
+    baseGroups = c("OSM (default)"),
+    overlayGroups = c("Amherst Boundary", "State Wetland", "Soil Types", "Significant Wetland", "Hydrology", "Ditches", "Wetland Proximity Values"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
 
 m
 
