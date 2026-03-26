@@ -50,6 +50,42 @@ Now we have a list of common plants we can export to csv.
 write.csv(common_plants,"data/common_plants.csv", row.names = FALSE)
 ```
 
+We also need to alter the new csv to make filtering possible.
+
+```{r}
+native_plants <- read.csv("data/common_plants.csv")
+
+native2 <- native_plants[,c("Scientific_Name", "Common_Name", "CoC", "nwpl_ncne", "Growth_Habit", "Duration")]
+
+#Fewer columns, edit the col names so it's more clear what each refers to
+
+native2 <- native2 %>%
+  rename(
+    `Scientific Name` = Scientific_Name,
+    Common = Common_Name,
+    Difficulty = CoC,
+    `Wetland Status` = nwpl_ncne,
+    `Growth Habit` = Growth_Habit,
+    Duration = Duration
+  )
+
+# Normalize and Un-nest the Growth Habit data 
+native2_cleaned <- native2 %>%
+  # Split cells with multiple values into separate rows
+  separate_rows(`Growth Habit`, sep = ",|;\\s*") %>% 
+  # Clean up whitespace/case again after splitting
+  mutate(
+    `Growth Habit` = str_trim(`Growth Habit`),
+    `Growth Habit` = str_to_title(`Growth Habit`)
+  ) %>%
+  # Remove rows that ended up blank after the split/trim
+  filter(!is.na(`Growth Habit`), `Growth Habit` != "")
+  
+write_csv(native2_cleaned, "D:/UB/Masters Project/MastersProjQuart/data/native2_cleaned.csv")
+
+```
+We can call the cleaned csv on the other page.
+
 ## Calling Data
 
 Layer files from the project are transformed into geojson for call expediency and ease of display.

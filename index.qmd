@@ -43,68 +43,9 @@ knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' )
 knitr::opts_chunk$set(cache=FALSE)  # cached results off
 ```
 
-# Plant Selector
-
-**Please use the search bars in any column to filter your data!**
-
-```{r}
-native_plants <- read.csv("data/common_plants.csv")
-
-#Here we'll edit the columns so not as much data needs to be loaded
-
-native2 <- native_plants[,c("Scientific_Name", "Common_Name", "CoC", "nwpl_ncne", "Growth_Habit", "Duration")]
-
-#Now we have fewer columns, let's edit the column names so it's more clear what each refers to
-
-native2 <- native2 %>%
-  rename(
-    `Scientific Name` = Scientific_Name,
-    Common = Common_Name,
-    Difficulty = CoC,
-    `Wetland Status` = nwpl_ncne,
-    `Growth Habit` = Growth_Habit,
-    Duration = Duration
-  )
-
-# Normalize and Un-nest the Growth Habit data 
-native2_cleaned <- native2 %>%
-  # Split cells with multiple values into separate rows
-  separate_rows(`Growth Habit`, sep = ",|;\\s*") %>% 
-  # Clean up whitespace/case again after splitting
-  mutate(
-    `Growth Habit` = str_trim(`Growth Habit`),
-    `Growth Habit` = str_to_title(`Growth Habit`)
-  ) %>%
-  # Remove rows that ended up blank after the split/trim
-  filter(!is.na(`Growth Habit`), `Growth Habit` != "")
-  
-
-# Create SharedData object from the CLEANED data
-
-#error due to unclear growth habit names
-native3 <- SharedData$new(native2_cleaned)
-```
-
-```{r interactive-table}
-bscols(
-  widths = NA,
-  list(
-    filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~`Growth Habit`),
-    filter_slider("CoC", "Difficulty", native3, ~Difficulty, width = "100%"),
-    filter_select("Drt", "Duration", native3, ~Duration)
-  ),
-  reactable(native3, minRows = 10)
-)
-
-```
-
-**Take note of the Wetland Codes below!**
-
-![Figure curtesy of USACE, Wetland Status is used for water tolerance in this selector.](data/Wetland_codes.png)
-
 # Map Selector
 
-This section will allow users to view local wetlands and water features!
+This section allows users to view local wetlands and water features!
 
 ```{r}
 ditches <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download")
@@ -159,5 +100,35 @@ m <- leaflet(town_bound) %>%
   )
 
 m
+
+```
+
+
+# Plant Selector
+
+**Please use the search bars in any column to filter your data!**
+
+```{r}
+native2_cleaned <- read.csv("data/native2_cleaned.csv")
+# Create SharedData object from the CLEANED data
+
+# beware error due to unclear growth habit names
+native3 <- SharedData$new(native2_cleaned)
+```
+
+**Take note of the Wetland Codes below!**
+
+![Figure curtesy of USACE, Wetland Status is used for water tolerance in this selector.](data/Wetland_codes.png)
+
+```{r interactive-table}
+bscols(
+  widths = NA,
+  list(
+    filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~`Growth Habit`),
+    filter_slider("CoC", "Difficulty", native3, ~Difficulty, width = "100%"),
+    filter_select("Drt", "Duration", native3, ~Duration)
+  ),
+  reactable(native3, minRows = 10)
+)
 
 ```
