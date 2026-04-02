@@ -124,7 +124,7 @@ native3 <- SharedData$new(native2_cleaned)
 bscols(
   widths = NA,
   list(
-    filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~`Growth Habit`),
+    filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~Growth.Habit),
     filter_slider("CoC", "Difficulty", native3, ~Difficulty, width = "100%"),
     filter_select("Drt", "Duration", native3, ~Duration)
   ),
