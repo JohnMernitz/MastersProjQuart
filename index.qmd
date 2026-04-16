@@ -20,11 +20,7 @@ editor_options:
 
 Welcome to the Plant Selection tool! If you would like to know more about this tool and its functionality, please check the about and code steps on the navbar above!
 
-Again, this plant selector is not fully tested, plants should be carefully considered if they are appropriate for one's needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!
-
-Suggestions are organized by species, common name, wetland status, growth type, and duration.
-
-## Libraries
+*Libraries*
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, results=F}
 library(tidyverse)
@@ -107,6 +103,9 @@ m
 # Plant Selector
 
 **Please use the search bars in any column to filter your data!**
+Reminder, plants should be carefully considered if they are appropriate for one's needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!
+
+Suggestions are organized by species, common name, wetland status, growth type, and duration.
 
 ```{r}
 native2_cleaned <- read.csv("data/native2_cleaned.csv")
