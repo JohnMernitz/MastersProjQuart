@@ -52,8 +52,11 @@ nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
 wetldunion <- st_transform(wetldunion, crs = 4326)
 wetldsum <- project(wetldsum, "EPSG:4326")
 
-#soil_names <- (unique(soils_C$SOIL_NAME))
+soil_names <- (unique(wetldunion$SOIL_NAME))
 wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
+head(wetldunion)
+wetldpallette <- colorNumeric(palette = "inferno", domain = wetldunion$Wetld_Wgt, na.color = "transparent")
+wetldlabel<-  paste( sep= "<br/>", wetldunion$SOIL_NAME, wetldunion$HYDRICSTAT)
 #soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
 ```
 
@@ -61,28 +64,16 @@ wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.c
 m <- leaflet(town_bound) %>%
   addTiles() %>% # Add a default base layer
   addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
-  
-  addPolygons(data = soils_C, group = "Soil Types", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,
-    highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = FALSE)) %>%
+  addPolygons(data = wetldunion, group = "Soil and Wetland Value", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~wetldpallette(Wetld_Wgt), label = lapply(wetldlabel, htmltools::HTML),highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = TRUE)) %>%
   addPolygons(data = nysnh_cl, group = "Significant Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "yellow") %>%
-
 #  addHomeButton(
 #    ext = town_bound,
 #    group = "Home",
 #    position = "bottomright"
 #  ) %>%
-  addRasterImage(wetldsum, group = "Wetland Proximity Values", colors = wetldsumpal, opacity = 0.8) %>%
-  #addImageQuery(wetldsum, project = TRUE, layerId = "Wetldsum", position = "top") %>%
-  addLegend(pal = wetldsumpal, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
-  addScaleBar(data=town_bound, position = c("bottomleft"),
-  options = scaleBarOptions()
-) %>%
-scaleBarOptions(maxWidth = 100, metric = TRUE,
-  imperial = TRUE,
-  updateWhenIdle = FALSE
-) %>%
-  #addLegend(pal = soils_pal, values = soils_C$SOIL_NAME, title = "Soil Types", position = "bottomright", opacity = 1)
-  #addImageQuery(wetldsum, type = "mousemove", digits = 2) %>%
+  addRasterImage(wetldsum, group = "Wetland Proximity", colors = wetldsumpal, opacity = 0.8) %>%
+#  addLegend(pal = wetldpallette, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
+  addScaleBar(position = c("bottomleft"), options = scaleBarOptions(maxWidth = 100, imperial = TRUE, updateWhenIdle = FALSE)) %>%
   addLayersControl(
     baseGroups = c("OSM (default)"),
     overlayGroups = c("Amherst Boundary", "Significant Wetland", "Soil and Wetland Value", "Wetland Proximity"),
