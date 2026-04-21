@@ -1,9 +1,6 @@
 ---
 title: "Environment Locator and Plant Selector"
-author: John Mernitz
 subtitle: Geographies of Native Plant Restoration
-date: today
-date-format: long
 format:
   html:
     dark-mode: true
@@ -15,10 +12,6 @@ format:
 editor_options: 
   chunk_output_type: console
 ---
-
-# Introduction
-
-Welcome to the Plant Selection tool! If you would like to know more about this tool and its functionality, please check the about and code steps on the navbar above!
 
 *Libraries*
 
@@ -44,13 +37,10 @@ knitr::opts_chunk$set(cache=FALSE)  # cached results off
 This section allows users to view local wetlands and water features!
 
 ```{r}
-ditches <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download")
 town_bound <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1WScoYQWLa9_jaobUhm-0xcf1MtTaqoE6&export=download")
-state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaWLGhwGyYHnhkBxn8RZRlwNFkk&export=download")
-#Wetland makes up 20.2228% of area of Amherst NY
-soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download")
+
 nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
-hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
+
 wetldsum <- rast("data/WtldSumVal1_8.tif")
 wetldunion <- read_sf("https://drive.usercontent.google.com/u/3/uc?id=1yNnPViAN8-cjZ38yrhCgsEoaqXd_Un9z&export=download")
 
@@ -58,29 +48,24 @@ wetldunion <- read_sf("https://drive.usercontent.google.com/u/3/uc?id=1yNnPViAN8
 #Save to tempdata folder
 
 town_bound <- st_transform(town_bound, crs = 4326)
-state_wetld <- st_transform(state_wetld, crs = 4326)
-soils_C <- st_transform(soils_C, crs = 4326)
-ditches <- st_transform(ditches, crs = 4326)
 nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
-hydro_cl <- st_transform(hydro_cl, crs = 4326)
 wetldunion <- st_transform(wetldunion, crs = 4326)
 wetldsum <- project(wetldsum, "EPSG:4326")
 
-soil_names <- (unique(soils_C$SOIL_NAME))
+#soil_names <- (unique(soils_C$SOIL_NAME))
 wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
-soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
+#soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
 ```
 
 ```{r, fig.width=6, fig.heigt=3, fig.cap="Map of Wetland Files"}
 m <- leaflet(town_bound) %>%
   addTiles() %>% # Add a default base layer
   addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
-  addPolygons(data = state_wetld, group = "State Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "green") %>%
+  
   addPolygons(data = soils_C, group = "Soil Types", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,
     highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = FALSE)) %>%
   addPolygons(data = nysnh_cl, group = "Significant Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "yellow") %>%
-  addPolygons(data = hydro_cl, group = "Hydrology", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "blue") %>%
-  addPolygons(data = ditches, group = "Ditches", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "red") %>%
+
 #  addHomeButton(
 #    ext = town_bound,
 #    group = "Home",
@@ -89,11 +74,18 @@ m <- leaflet(town_bound) %>%
   addRasterImage(wetldsum, group = "Wetland Proximity Values", colors = wetldsumpal, opacity = 0.8) %>%
   #addImageQuery(wetldsum, project = TRUE, layerId = "Wetldsum", position = "top") %>%
   addLegend(pal = wetldsumpal, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
+  addScaleBar(data=town_bound, position = c("bottomleft"),
+  options = scaleBarOptions()
+) %>%
+scaleBarOptions(maxWidth = 100, metric = TRUE,
+  imperial = TRUE,
+  updateWhenIdle = FALSE
+) %>%
   #addLegend(pal = soils_pal, values = soils_C$SOIL_NAME, title = "Soil Types", position = "bottomright", opacity = 1)
   #addImageQuery(wetldsum, type = "mousemove", digits = 2) %>%
   addLayersControl(
     baseGroups = c("OSM (default)"),
-    overlayGroups = c("Amherst Boundary", "State Wetland", "Soil Types", "Significant Wetland", "Hydrology", "Ditches", "Wetland Proximity Values"),
+    overlayGroups = c("Amherst Boundary", "Significant Wetland", "Soil and Wetland Value", "Wetland Proximity"),
     options = layersControlOptions(collapsed = FALSE)
   )
 
@@ -133,3 +125,4 @@ bscols(
 )
 
 ```
+
