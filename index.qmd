@@ -52,6 +52,7 @@ soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP
 nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
 hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
 wetldsum <- rast("data/WtldSumVal1_8.tif")
+wetldunion <- read_sf("https://drive.usercontent.google.com/u/3/uc?id=1yNnPViAN8-cjZ38yrhCgsEoaqXd_Un9z&export=download")
 
 #Download.file()
 #Save to tempdata folder
@@ -62,6 +63,7 @@ soils_C <- st_transform(soils_C, crs = 4326)
 ditches <- st_transform(ditches, crs = 4326)
 nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
 hydro_cl <- st_transform(hydro_cl, crs = 4326)
+wetldunion <- st_transform(wetldunion, crs = 4326)
 wetldsum <- project(wetldsum, "EPSG:4326")
 
 soil_names <- (unique(soils_C$SOIL_NAME))

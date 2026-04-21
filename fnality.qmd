@@ -98,7 +98,7 @@ soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP
 nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
 hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
 wetldsum <- rast("data/WtldSumVal1_8.tif")
-
+#wetldunion <- read_sf("https://drive.usercontent.google.com/u/3/uc?id=1yNnPViAN8-cjZ38yrhCgsEoaqXd_Un9z&export=download")
 #Download.file()
 #Save to tempdata folder
 
@@ -123,12 +123,10 @@ The following is the first attempt at a map of wetland proximity.
 m <- leaflet(town_bound) %>%
   addTiles() %>% # Add a default base layer
   addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
-  addPolygons(data = state_wetld, group = "State Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "green") %>%
   addPolygons(data = soils_C, group = "Soil Types", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,
     highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = FALSE)) %>%
   addPolygons(data = nysnh_cl, group = "Significant Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "yellow") %>%
   addPolygons(data = hydro_cl, group = "Hydrology", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "blue") %>%
-  addPolygons(data = ditches, group = "Ditches", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "red") %>%
 #  addHomeButton(
 #    ext = town_bound,
 #    group = "Home",
@@ -137,6 +135,16 @@ m <- leaflet(town_bound) %>%
   addRasterImage(wetldsum, group = "Wetland Proximity Values", colors = wetldsumpal, opacity = 0.8) %>%
   #addImageQuery(wetldsum, project = TRUE, layerId = "Wetldsum", position = "top") %>%
   addLegend(pal = wetldsumpal, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
+#  addScaleBar(data=town_bound, position = c("topright", "bottomright", "bottomleft", "topleft"),
+#  options = scaleBarOptions()
+#)
+
+#scaleBarOptions(
+#  maxWidth = 100,
+#  metric = TRUE,
+#  imperial = TRUE,
+#  updateWhenIdle = TRUE
+#)
   #addLegend(pal = soils_pal, values = soils_C$SOIL_NAME, title = "Soil Types", position = "bottomright", opacity = 1)
   #addImageQuery(wetldsum, type = "mousemove", digits = 2) %>%
   addLayersControl(
