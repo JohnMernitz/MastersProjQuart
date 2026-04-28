@@ -25,7 +25,7 @@ The data is divided into the above categories, but also must be split due to New
 
 *Libraries*
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, results=F}
+```{r echo=True, message=FALSE, warning=FALSE, results=F}
 library(tidyverse)
 library(leaflet)
 library(kableExtra)
