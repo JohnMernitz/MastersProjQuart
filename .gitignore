@@ -9,3 +9,5 @@ _site
 styles*
 widgets
 tempdata/*
+
+**/*.quarto_ipynb

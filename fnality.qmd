@@ -1,6 +1,5 @@
 ---
-title: "Selector Functionality"
-author: John Mernitz
+title: "How it Works"
 subtitle: Methods and Process
 format:
   html:
@@ -14,22 +13,42 @@ format:
 
 # Underlying Principles
 
-The shapefiles within this project are from the Town of Amherst's GIS division, and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority.
+The shapefiles within this project are from the Town of Amherst's GIS division, Soil Survey Geographic Database (SSURGO), and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority.
 
 # Database Organization
 
-The plants data in this project is currently a product of David Werier and the New York Flora Association, who allowed permission of its use in this project. Plants therein are those documented by NYFA in their Atlas project as native to Erie County, albeit acknowledging that their list is not complete. The list of plants has the fields of scientific name, common name,family, genus, species, infraspecies, Coefficient of Conservatism, State Status, National Wetland Plant List code for Northcentral and Northeast, State Rank, Global Rank, Habitat, Growth Habit, and Duration. 
+The plants data in this project is currently a product of David Werier and the New York Flora Association, who allowed permission of its use in this project. Plants therein are those documented by NYFA in their Atlas project as native to Erie County, albeit acknowledging that their list is not complete. The list of plants has the fields of scientific name, common name,family, genus, species, infraspecies, Coefficient of Conservatism, State Status, National Wetland Plant List code for Northcentral and Northeast, State Rank, Global Rank, Habitat, Growth Habit, and Duration.
 
 ## Data Management
 
-The data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned. 
-```{r, message=F, warning=F, results=F}
+The data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned.
+
+*Libraries*
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, results=F}
 library(tidyverse)
+library(leaflet)
+library(kableExtra)
+library(htmlwidgets)
+library(widgetframe)
+library(dplyr)
+library(reactable)
+library(crosstalk)
+library(sf)
+library(mapview)
+library(leafem)
+library(terra)
+knitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) 
+knitr::opts_chunk$set(cache=FALSE)  # cached results off
+
+
 plant_data <- read.csv("data/Copy_NYFA_Erie_Native_pared.csv")
 #Downloading data
 ```
 
-This first section divides the data based on threat status. Extirpated plants should be removed as well.
+It is necessary to download several libraries to allow their use in the website construction.
+
+This first section divides the data based on rarity status. Extirpated plants should be removed as well.
 
 ```{r, message=F, warning=F, results=F}
 plant_data <- plant_data %>%
@@ -50,23 +69,104 @@ Now we have a list of common plants we can export to csv.
 write.csv(common_plants,"data/common_plants.csv", row.names = FALSE)
 ```
 
+We also need to alter the new csv to make filtering possible.
+
+```{r}
+native_plants <- read.csv("data/common_plants.csv")
+
+native2 <- native_plants[,c("Scientific_Name", "Common_Name", "CoC", "nwpl_ncne", "Growth_Habit", "Duration")]
+
+#Fewer columns, edit the col names so it's more clear what each refers to
+
+native2 <- native2 %>%
+  rename(
+    `Scientific Name` = Scientific_Name,
+    Common = Common_Name,
+    Difficulty = CoC,
+    `Wetland Status` = nwpl_ncne,
+    `Growth Habit` = Growth_Habit,
+    Duration = Duration
+  )
+
+# Normalize and Un-nest the Growth Habit data 
+native2_cleaned <- native2 %>%
+  # Split cells with multiple values into separate rows
+  separate_rows(`Growth Habit`, sep = ",|;\\s*") %>% 
+  # Clean up whitespace/case again after splitting
+  mutate(
+    `Growth Habit` = str_trim(`Growth Habit`),
+    `Growth Habit` = str_to_title(`Growth Habit`)
+  ) %>%
+  # Remove rows that ended up blank after the split/trim
+  filter(!is.na(`Growth Habit`), `Growth Habit` != "")
+  
+write_csv(native2_cleaned, "D:/UB/Masters Project/MastersProjQuart/data/native2_cleaned.csv")
+
+```
+
+We can call the cleaned csv on the other page.
+
 ## Calling Data
 
 Layer files from the project are transformed into geojson for call expediency and ease of display.
 
+```{r}
+ditches <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download")
+town_bound <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1WScoYQWLa9_jaobUhm-0xcf1MtTaqoE6&export=download")
+state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaWLGhwGyYHnhkBxn8RZRlwNFkk&export=download")
+#Wetland makes up 20.2228% of area of Amherst NY
+soils_C <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download")
+nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download")
+hydro_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download")
+wetldsum <- rast("data/WtldSumVal1_8.tif")
+
+town_bound <- st_transform(town_bound, crs = 4326)
+state_wetld <- st_transform(state_wetld, crs = 4326)
+soils_C <- st_transform(soils_C, crs = 4326)
+ditches <- st_transform(ditches, crs = 4326)
+nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
+hydro_cl <- st_transform(hydro_cl, crs = 4326)
+wetldsum <- project(wetldsum, "EPSG:4326")
+
+soil_names <- (unique(soils_C$SOIL_NAME))
+wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
+soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
+```
+
+The second half of this code block focuses on projection and the creation of palettes for the display of various layers, both shapefile and raster(image).
+
 ## Display
 
+The following is the first iteration of a map of wetland proximity.
 
+```{r, fig.width=6, fig.heigt=3, fig.cap="Map of Wetland Files"}
+m <- leaflet(town_bound) %>%
+  addTiles() %>% # Add a default base layer
+  addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
+    addPolygons(data = state_wetld, group = "State Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "green") %>%
+  addPolygons(data = soils_C, group = "Soil Types", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,
+    highlightOptions = highlightOptions(weight = 3, color = "white", bringToFront = FALSE)) %>%
+  addPolygons(data = nysnh_cl, group = "Significant Wetland", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "yellow") %>%
+  addPolygons(data = hydro_cl, group = "Hydrology", color = "gray", weight = 1, fillOpacity = 0.5, fillColor = "blue") %>%
 
-# Site Aesthetics and Utility
+  addRasterImage(wetldsum, group = "Wetland Proximity Values", colors = wetldsumpal, opacity = 0.8) %>%
+  
+  addLegend(pal = wetldsumpal, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
 
+  addLayersControl(
+    baseGroups = c("OSM (default)"),
+    overlayGroups = c("Amherst Boundary", "State Wetland", "Soil Types", "Significant Wetland", "Hydrology", "Ditches", "Wetland Proximity Values"),
+    options = layersControlOptions(collapsed = FALSE)
+  )
 
+m
 
-# Linked Paper
+```
 
+## Site Utility
 
+The design of the site is intended to collect information about plants and the landscape for public use. Combining both, and allowing users to filter for convenience, hopefully introduces a utility that residents of the Amherst area can benefit from.
 
-# Citations
+## Linked Paper
 
-
-
+For more of the literature and science behind the project, please check out the paper associated with this site (hyperlinked)!
