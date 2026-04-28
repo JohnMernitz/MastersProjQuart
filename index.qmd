@@ -44,18 +44,18 @@ nysnh_cl <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8Km
 wetldsum <- rast("data/WtldSumVal1_8.tif")
 wetldunion <- read_sf("https://drive.usercontent.google.com/u/3/uc?id=1yNnPViAN8-cjZ38yrhCgsEoaqXd_Un9z&export=download")
 
-#Download.file()
-#Save to tempdata folder
-
 town_bound <- st_transform(town_bound, crs = 4326)
 nysnh_cl <- st_transform(nysnh_cl, crs = 4326)
 wetldunion <- st_transform(wetldunion, crs = 4326)
 wetldsum <- project(wetldsum, "EPSG:4326")
 
 soil_names <- (unique(wetldunion$SOIL_NAME))
+
+bins1 <- 0:10
+
 wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
 
-wetldpallette <- colorNumeric(palette = "inferno", domain = wetldunion$Wetld_Wgt, na.color = "transparent")
+wetldpallette <- colorBin(palette = "inferno", domain = wetldunion$Wetld_Wgt,  bins = bins1, na.color = "transparent")
 wetldlabel<-  paste( sep= "<br/>", wetldunion$SOIL_NAME, wetldunion$HYDRICSTAT)
 #soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
 ```
@@ -72,14 +72,14 @@ m <- leaflet(town_bound) %>%
 #    position = "bottomright"
 #  ) %>%
   addRasterImage(wetldsum, group = "Wetland Proximity", colors = wetldsumpal, opacity = 0.8) %>%
-#  addLegend(pal = wetldpallette, values = values(wetldsum), title = "Wetland Proximity values", opacity = 1) %>%
+  addLegend(position = "bottomright", group = "Value Legend", pal = wetldpallette, values = wetldunion[[4]], title = "Wetland Value (0-10)", opacity = 1) %>%
   addScaleBar(position = c("bottomleft"), options = scaleBarOptions(maxWidth = 100, imperial = TRUE, updateWhenIdle = FALSE)) %>%
   addLayersControl(
     baseGroups = c("OSM (default)"),
-    overlayGroups = c("Amherst Boundary", "Significant Wetland", "Soil and Wetland Value", "Wetland Proximity"),
-    options = layersControlOptions(collapsed = FALSE)
-  )
-
+    overlayGroups = c("Amherst Boundary", "Significant Wetland", "Soil and Wetland Value", "Wetland Proximity", "Value Legend"),
+    options = layersControlOptions(collapsed = TRUE)
+  )%>%
+hideGroup("Wetland Proximity")
 m
 
 ```
