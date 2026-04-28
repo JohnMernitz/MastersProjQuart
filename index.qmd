@@ -54,7 +54,7 @@ wetldsum <- project(wetldsum, "EPSG:4326")
 
 soil_names <- (unique(wetldunion$SOIL_NAME))
 wetldsumpal <- colorNumeric(palette = "viridis", domain = values(wetldsum), na.color = "transparent")
-head(wetldunion)
+
 wetldpallette <- colorNumeric(palette = "inferno", domain = wetldunion$Wetld_Wgt, na.color = "transparent")
 wetldlabel<-  paste( sep= "<br/>", wetldunion$SOIL_NAME, wetldunion$HYDRICSTAT)
 #soils_pal <- colorFactor(palette = "turbo", domain = soil_names, na.color = "transparent")
