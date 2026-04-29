@@ -100,7 +100,7 @@ native2_cleaned <- native2 %>%
   # Remove rows that ended up blank after the split/trim
   filter(!is.na(`Growth Habit`), `Growth Habit` != "")
   
-write_csv(native2_cleaned, "D:/UB/Masters Project/MastersProjQuart/data/native2_cleaned.csv")
+write_csv(native2_cleaned, "data/native2_cleaned.csv")
 
 ```
 
