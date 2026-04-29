@@ -1,31 +1,17 @@
 [
   {
-    "objectID": "fnality.html",
-    "href": "fnality.html",
-    "title": "Selector Functionality",
+    "objectID": "data/Readme.html",
+    "href": "data/Readme.html",
+    "title": "Geographies of Native Plant Restoration",
     "section": "",
-    "text": "The shapefiles within this project are from the Town of Amherst’s GIS division, and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority."
+    "text": "Place any data needed by your analysis in this folder. Please do not store large files here. Then read in any data using the ‘data’ path. For example, read_csv(\"data/data.csv\")."
   },
   {
-    "objectID": "fnality.html#data-management",
-    "href": "fnality.html#data-management",
-    "title": "Selector Functionality",
-    "section": "Data Management",
-    "text": "Data Management\nThe data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned.\n\n\nCode\nlibrary(tidyverse)\nplant_data &lt;- read.csv(\"data/Copy_NYFA_Erie_Native_pared.csv\")\n#Downloading data\n\n\nThis first section divides the data based on threat status. Extirpated plants should be removed as well.\n\n\nCode\nplant_data &lt;- plant_data %&gt;%\n  filter(plant_data[,14] != \"SX\")\n         \ncommon_plants &lt;- plant_data %&gt;%\n  filter(!(plant_data[,12] %in% c(\"Endangered-State\", \"Threatened-State\", \"Rare-State\")))\n#first filter for non-threatened data\n\nthreatened_plants &lt;- plant_data %&gt;%\n  filter(plant_data[,12] %in% c(\"Endangered-State\", \"Threatened-State\", \"Rare-State\"))\n#second filter for threatened plant species\n\n\nNow we have a list of common plants we can export to csv.\n\n\nCode\nwrite.csv(common_plants,\"data/common_plants.csv\", row.names = FALSE)"
-  },
-  {
-    "objectID": "fnality.html#calling-data",
-    "href": "fnality.html#calling-data",
-    "title": "Selector Functionality",
-    "section": "Calling Data",
-    "text": "Calling Data\nLayer files from the project are transformed into geojson for call expediency and ease of display."
-  },
-  {
-    "objectID": "fnality.html#display",
-    "href": "fnality.html#display",
-    "title": "Selector Functionality",
-    "section": "Display",
-    "text": "Display"
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Environment Locator and Plant Selector",
+    "section": "",
+    "text": "Map Selector\nThis section allows users to view local wetlands and water features!\n\n\n\n\nMap of Wetland Files\n\n\n\n\nPlant Selector\nPlease use the search bars in any column to filter your data! Reminder, plants should be carefully considered if they are appropriate for one’s needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!\nSuggestions are organized by species, common name, wetland status, growth type, and duration.\nTake note of the Wetland Codes below!\n\n\n\nFigure curtesy of USACE, Wetland Status is used for soil water tolerance in this selector.\n\n\n\n\n\n\n\n\nGrowth Habit\n\n\n\n\nFern\n\n\n\n\n\nForb/Herb\n\n\n\n\n\nGraminoid\n\n\n\n\n\nHerbaceous\n\n\n\n\n\nHerbaceous Dicot\n\n\n\n\n\nLycophyte\n\n\n\n\n\nShrub\n\n\n\n\n\nSubshrub\n\n\n\n\n\nTree\n\n\n\n\n\nVine\n\n\n\n\n\n\nDifficulty\n\n\n\n\nDuration"
   },
   {
     "objectID": "about.html",
@@ -42,24 +28,45 @@
     "text": "Principles\nA strong and healthy ecosystem needs in part a wide base to stand upon. Biodiversity, the range of many different plants and insects and animals that make up an ecosystem, is that base. Each creature relies on local conditions and roles which they have grown with for thousands of years. When one fails, another is ready to step into that role to continue ecosystem function. In the interest of increasing the ability of nature to resist change by humans, through land use and other means, it is vital that people do their part to increase biodiversity.\nThe capacity to know and choose native plants for property owners’ lands and homes is very important for local biodiversity. Too often, the choice is made by nurseries and standard garden plans that popular non-native plants sell best. Due to there being few alternatives or less clear knowledge of them, native plants are not chosen. The partial restoration of local ecosystems is preferable to no change and is quite possible with the correct information. This project’s code seeks to help its users with that.\nWith coding and appropriate computer data storage, creating a tool which can act as a skeleton for repeated user questions is possible. The Native Plant Finder is an attempt to construct a template site that can be copied in any other location. Ideally, just changing base files and plant data will allow user experiences to be similar, like a bookshelf with different books on it. This puts decisions in people’s hands, letting them make choices with local information."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Geographies of Native Plant Restoration",
+    "objectID": "fnality.html",
+    "href": "fnality.html",
+    "title": "How it Works",
     "section": "",
-    "text": "Welcome to the Plant Selection tool! If you would like to know more about this tool and its functionality, please check the about and code steps on the navbar above!\nAgain, this plant selector is not fully tested, plants should be carefully considered if they are appropriate for one’s needs. This page seeks to diversify thoughts and choices about native plants in gardens; do not blindly choose one. Please be aware some of these plants have natural defenses like thorns, irritating sap, or inedible fruits!\nSuggestions are organized by species, common name, wetland status, growth type, and duration.\n\n\n\n\nCode\nlibrary(tidyverse)\nlibrary(leaflet)\nlibrary(kableExtra)\nlibrary(htmlwidgets)\nlibrary(widgetframe)\ninstall.packages(\"DT\")\nlibrary(DT)\nlibrary(sf)\nlibrary(mapview)\nlibrary(leafem)\nlibrary(terra)\nknitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) \nknitr::opts_chunk$set(cache=FALSE)  # cached results off"
+    "text": "The shapefiles within this project are from the Town of Amherst’s GIS division, Soil Survey Geographic Database (SSURGO), and from the New York Natural Heritage Program(NYNHP). From a combination of the hydrographic and wetland layers of Amherst, a buffer layer was composed to encompass a quarter mile around those features. Similarly, a buffer around the NYNHP was created to provide an extended range wherein various plants of that biome would be recommended in priority."
   },
   {
-    "objectID": "index.html#libraries",
-    "href": "index.html#libraries",
-    "title": "Geographies of Native Plant Restoration",
-    "section": "",
-    "text": "Code\nlibrary(tidyverse)\nlibrary(leaflet)\nlibrary(kableExtra)\nlibrary(htmlwidgets)\nlibrary(widgetframe)\ninstall.packages(\"DT\")\nlibrary(DT)\nlibrary(sf)\nlibrary(mapview)\nlibrary(leafem)\nlibrary(terra)\nknitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) \nknitr::opts_chunk$set(cache=FALSE)  # cached results off"
+    "objectID": "fnality.html#data-management",
+    "href": "fnality.html#data-management",
+    "title": "How it Works",
+    "section": "Data Management",
+    "text": "Data Management\nThe data is divided into the above categories, but also must be split due to New York laws about threatened, endangered and rare species. It is forbidden to cause any bother or harm to these species, and so their data must be partitioned.\nLibraries\n\n\nCode\nlibrary(tidyverse)\nlibrary(leaflet)\nlibrary(kableExtra)\nlibrary(htmlwidgets)\nlibrary(widgetframe)\nlibrary(dplyr)\nlibrary(reactable)\nlibrary(crosstalk)\nlibrary(sf)\nlibrary(mapview)\nlibrary(leafem)\nlibrary(terra)\nknitr::opts_chunk$set(widgetframe_widgets_dir = 'widgets' ) \nknitr::opts_chunk$set(cache=FALSE)  # cached results off\n\n\nplant_data &lt;- read.csv(\"data/Copy_NYFA_Erie_Native_pared.csv\")\n#Downloading data\n\n\nIt is necessary to download several libraries to allow their use in the website construction.\nThis first section divides the data based on rarity status. Extirpated plants should be removed as well.\n\n\nCode\nplant_data &lt;- plant_data %&gt;%\n  filter(plant_data[,14] != \"SX\")\n         \ncommon_plants &lt;- plant_data %&gt;%\n  filter(!(plant_data[,12] %in% c(\"Endangered-State\", \"Threatened-State\", \"Rare-State\")))\n#first filter for non-threatened data\n\nthreatened_plants &lt;- plant_data %&gt;%\n  filter(plant_data[,12] %in% c(\"Endangered-State\", \"Threatened-State\", \"Rare-State\"))\n#second filter for threatened plant species\n\n\nNow we have a list of common plants we can export to csv.\n\n\nCode\nwrite.csv(common_plants,\"data/common_plants.csv\", row.names = FALSE)\n\n\nWe also need to alter the new csv to make filtering possible.\n\n\nCode\nnative_plants &lt;- read.csv(\"data/common_plants.csv\")\n\nnative2 &lt;- native_plants[,c(\"Scientific_Name\", \"Common_Name\", \"CoC\", \"nwpl_ncne\", \"Growth_Habit\", \"Duration\")]\n\n#Fewer columns, edit the col names so it's more clear what each refers to\n\nnative2 &lt;- native2 %&gt;%\n  rename(\n    `Scientific Name` = Scientific_Name,\n    Common = Common_Name,\n    Difficulty = CoC,\n    `Wetland Status` = nwpl_ncne,\n    `Growth Habit` = Growth_Habit,\n    Duration = Duration\n  )\n\n# Normalize and Un-nest the Growth Habit data \nnative2_cleaned &lt;- native2 %&gt;%\n  # Split cells with multiple values into separate rows\n  separate_rows(`Growth Habit`, sep = \",|;\\\\s*\") %&gt;% \n  # Clean up whitespace/case again after splitting\n  mutate(\n    `Growth Habit` = str_trim(`Growth Habit`),\n    `Growth Habit` = str_to_title(`Growth Habit`)\n  ) %&gt;%\n  # Remove rows that ended up blank after the split/trim\n  filter(!is.na(`Growth Habit`), `Growth Habit` != \"\")\n  \nwrite_csv(native2_cleaned, \"data/native2_cleaned.csv\")\n\n\nWe can call the cleaned csv on the other page."
   },
   {
-    "objectID": "data/Readme.html",
-    "href": "data/Readme.html",
-    "title": "Geographies of Native Plant Restoration",
-    "section": "",
-    "text": "Place any data needed by your analysis in this folder. Please do not store large files here. Then read in any data using the ‘data’ path. For example, read_csv(\"data/data.csv\")."
+    "objectID": "fnality.html#calling-data",
+    "href": "fnality.html#calling-data",
+    "title": "How it Works",
+    "section": "Calling Data",
+    "text": "Calling Data\nLayer files from the project are transformed into geojson for call expediency and ease of display.\n\n\nCode\nditches &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download\")\ntown_bound &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=1WScoYQWLa9_jaobUhm-0xcf1MtTaqoE6&export=download\")\nstate_wetld &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaWLGhwGyYHnhkBxn8RZRlwNFkk&export=download\")\n#Wetland makes up 20.2228% of area of Amherst NY\nsoils_C &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=1zItxfisuLYZP6ZhnyUzMGH80UShGLAUQ&export=download\")\nnysnh_cl &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=1Mjfgt23T8KmxcY5OzBJ0DZ4dgW2jnoHd&export=download\")\nhydro_cl &lt;- read_sf(\"https://drive.usercontent.google.com/u/0/uc?id=13OIxXMGIlrMYLmIUJuhU8ElM9Dpkoz11&export=download\")\nwetldsum &lt;- rast(\"data/WtldSumVal1_8.tif\")\n\ntown_bound &lt;- st_transform(town_bound, crs = 4326)\nstate_wetld &lt;- st_transform(state_wetld, crs = 4326)\nsoils_C &lt;- st_transform(soils_C, crs = 4326)\nditches &lt;- st_transform(ditches, crs = 4326)\nnysnh_cl &lt;- st_transform(nysnh_cl, crs = 4326)\nhydro_cl &lt;- st_transform(hydro_cl, crs = 4326)\nwetldsum &lt;- project(wetldsum, \"EPSG:4326\")\n\nsoil_names &lt;- (unique(soils_C$SOIL_NAME))\nwetldsumpal &lt;- colorNumeric(palette = \"viridis\", domain = values(wetldsum), na.color = \"transparent\")\nsoils_pal &lt;- colorFactor(palette = \"turbo\", domain = soil_names, na.color = \"transparent\")\n\n\nThe second half of this code block focuses on projection and the creation of palettes for the display of various layers, both shapefile and raster(image)."
+  },
+  {
+    "objectID": "fnality.html#display",
+    "href": "fnality.html#display",
+    "title": "How it Works",
+    "section": "Display",
+    "text": "Display\nThe following is the first iteration of a map of wetland proximity.\n\n\nCode\nm &lt;- leaflet(town_bound) %&gt;%\n  addTiles() %&gt;% # Add a default base layer\n  addPolygons(data = town_bound, group = \"Amherst Boundary\", stroke = TRUE, color = \"black\", fill = FALSE, weight = 3) %&gt;%\n    addPolygons(data = state_wetld, group = \"State Wetland\", color = \"gray\", weight = 1, fillOpacity = 0.5, fillColor = \"green\") %&gt;%\n  addPolygons(data = soils_C, group = \"Soil Types\", color = \"gray\", weight = 1, fillOpacity = 0.5, fillColor = ~soils_pal(SOIL_NAME), label = ~SOIL_NAME,\n    highlightOptions = highlightOptions(weight = 3, color = \"white\", bringToFront = FALSE)) %&gt;%\n  addPolygons(data = nysnh_cl, group = \"Significant Wetland\", color = \"gray\", weight = 1, fillOpacity = 0.5, fillColor = \"yellow\") %&gt;%\n  addPolygons(data = hydro_cl, group = \"Hydrology\", color = \"gray\", weight = 1, fillOpacity = 0.5, fillColor = \"blue\") %&gt;%\n\n  addRasterImage(wetldsum, group = \"Wetland Proximity Values\", colors = wetldsumpal, opacity = 0.8) %&gt;%\n  \n  addLegend(pal = wetldsumpal, values = values(wetldsum), title = \"Wetland Proximity values\", opacity = 1) %&gt;%\n\n  addLayersControl(\n    baseGroups = c(\"OSM (default)\"),\n    overlayGroups = c(\"Amherst Boundary\", \"State Wetland\", \"Soil Types\", \"Significant Wetland\", \"Hydrology\", \"Ditches\", \"Wetland Proximity Values\"),\n    options = layersControlOptions(collapsed = FALSE)\n  )\n\nm\n\n\n\n\nMap of Wetland Files"
+  },
+  {
+    "objectID": "fnality.html#site-utility",
+    "href": "fnality.html#site-utility",
+    "title": "How it Works",
+    "section": "Site Utility",
+    "text": "Site Utility\nThe design of the site is intended to collect information about plants and the landscape for public use. Combining both, and allowing users to filter for convenience, hopefully introduces a utility that residents of the Amherst area can benefit from."
+  },
+  {
+    "objectID": "fnality.html#linked-paper",
+    "href": "fnality.html#linked-paper",
+    "title": "How it Works",
+    "section": "Linked Paper",
+    "text": "Linked Paper\nFor more of the literature and science behind the project, please check out the paper associated with this site (hyperlinked)!"
   }
 ]
