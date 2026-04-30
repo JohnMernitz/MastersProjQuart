@@ -1,1 +1,1 @@
-Sitemap: https://JohnMernitz.github.io/MastersProjQuart/sitemap.xml
+Sitemap: https://JohnMernitz.github.io/Native_Wetland_Plant_Selector/sitemap.xml
