@@ -1,8 +1,8 @@
 project:
   type: website
 
-metadata:
-  sidebar: main_sidebar
+#metadata:
+  #sidebar: main_sidebar
 
 website:
   title: "Geographies of Native Plant Restoration"
@@ -26,15 +26,6 @@ website:
         text: How it Works
       - href: about.qmd
         text: About
-#  sidebar:
-#      - id: main_sidebar
-#        title: "This Page"
-#        style: "docked"
-#        background: "light"
-#        align: "left"
-#        contents:
-#          - toc: true
-#            depth: 3
 format:
   html:
     respect-user-color-scheme: true

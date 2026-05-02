@@ -110,7 +110,7 @@ We can call the cleaned csv on the other page.
 
 Layer files from the project are transformed into geojson for call expediency and ease of display.
 
-```{r}
+```{r, eval=FALSE}
 ditches <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1SLCufnLDpR4bEJeUB1usJ2OFzBlWXtEY&export=download")
 town_bound <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1WScoYQWLa9_jaobUhm-0xcf1MtTaqoE6&export=download")
 state_wetld <- read_sf("https://drive.usercontent.google.com/u/0/uc?id=1uS0oYTaWLGhwGyYHnhkBxn8RZRlwNFkk&export=download")
@@ -139,7 +139,7 @@ The second half of this code block focuses on projection and the creation of pal
 
 The following is the first iteration of a map of wetland proximity.
 
-```{r, fig.width=6, fig.heigt=3, fig.cap="Map of Wetland Files"}
+```{r, eval=FALSE,fig.width=6, fig.heigt=3, fig.cap="Map of Wetland Files"}
 m <- leaflet(town_bound) %>%
   addTiles() %>% # Add a default base layer
   addPolygons(data = town_bound, group = "Amherst Boundary", stroke = TRUE, color = "black", fill = FALSE, weight = 3) %>%
