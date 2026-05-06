@@ -8,9 +8,47 @@ format:
       dark: minty
     code-fold: true
     toc: true
+    page-layout: full
 editor_options: 
   chunk_output_type: console
 ---
+
+<style>
+.cs-filter-grid .crosstalk-options-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));   
+  grid-gap: 10px;
+  margin-top: 10px;
+}
+.cs-filter-grid .checkbox {
+  margin: 0;               
+  display: flex;
+  align-items: flex-start;
+  break-inside: avoid;
+}
+.cs-filter-grid .checkbox input {
+  margin-right: 8px;
+  margin-top: 4px;
+}
+.column-sm-3 {
+  padding-right: 25px !important; 
+}
+.control-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+@media (max-width: 768px) {
+  /* Fix: Ensure the class name matches your R code */
+  .cs-filter-grid .crosstalk-options-group {
+    grid-template-columns: 1fr;
+  }
+  .column-sm-3 {
+    margin-bottom: 30px;
+    padding-right: 15px !important;
+  }
+}
+</style>
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, results=F}
 #install.packages("reactable")
@@ -21,6 +59,7 @@ library(tidyverse)
 library(leaflet)
 library(kableExtra)
 library(htmlwidgets)
+library(htmltools)
 library(widgetframe)
 library(dplyr)
 library(reactable)
@@ -108,12 +147,15 @@ Read more about why soil type and the above index matter on the **"How it Works"
 ```{r echo=FALSE, interactive-table}
 #| column: screen
 bscols(
-  widths = NA,
+  widths = c(3,9),
+  device = "sm",
   list(
-    filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~Growth.Habit),
+    filter_select("Wtd_St", "Wetland Status", native3, ~Wetland.Status),
+    tags$div(class = "cs-filter-grid",
+      filter_checkbox("Gth_Hbt", "Growth Habit", native3, ~Growth.Habit)
+      ),
     filter_slider("CoC", "Difficulty", native3, ~Difficulty, width = "100%"),
-    filter_select("Drt", "Duration", native3, ~Duration),
-    filter_select("Wtd_St", "Wetland Status", native3, ~Wetland.Status)
+    filter_select("Drt", "Duration", native3, ~Duration)
   ),
   reactable(
     native3,
