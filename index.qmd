@@ -152,7 +152,7 @@ wetland_labels <- c(
 **Step 2: Take note of the Wetland Codes below!**
 
 | **Wetland Values** | **Wetland Status Indicator** | Description |
-|:--------:|:-------------------:|-----------------------------------------|
+|:--:|:--:|----|
 | 0-2 | Upland (UPL) | Almost never present in wetlands |
 | 3-4 | Facultative Upland (FACU) | Usually non-wetland, but may occur in wetlands |
 | 5-6 | Facultative (FAC) | Present both in and out of wetlands |
