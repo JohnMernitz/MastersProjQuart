@@ -18,7 +18,7 @@
     "href": "about.html",
     "title": "About This Site",
     "section": "",
-    "text": "This site is the current iteration of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.\nThe aim of this project is to code a web interface which collects and processes environmental information based on user input and return suitable guidance for site-specific native plant restoration.\nAs this is a work in progress, data and suggestions described herein should be given further consideration should someone seek to use them."
+    "text": "This site is Version One of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.\nThe aim of this project is to code a web interface which collects and processes environmental information based on user input and return suitable guidance for site-specific native plant restoration.\nAs this is the first full iteration of the site, data and suggestions described herein should be given further consideration should someone seek to use them."
   },
   {
     "objectID": "about.html#principles",
