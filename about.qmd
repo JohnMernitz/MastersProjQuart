@@ -1,7 +1,5 @@
 ---
-title: "About This Site"
-author: John Mernitz
-subtitle: Planting Selection Tool
+subtitle: "**About This Site**"
 format:
   html:
     dark-mode: true
@@ -12,13 +10,29 @@ format:
     toc: true
 ---
 
+```{=html}
+<style>
+.quarto-title-banner {
+  text-align: center !important;
+}
+.title {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 90%;
+}
+</style>
+```
+
+**\
+Creating a Web-tool to Produce Site-specific Recommendations for Native Wetland Plant Restoration in the Town of Amherst, NY**
+
 This site is Version One of a Masters Project for the Geography Department of the University at Buffalo. All code used here is developed with the intent of combining skills and knowledge into a functional and substantive product.
 
 The aim of this project is to code a web interface which collects and processes environmental information based on user input and return suitable guidance for site-specific native plant restoration.
 
 As this is the first full iteration of the site, data and suggestions described herein should be given further consideration should someone seek to use them.
 
-## Principles
+**Principles**
 
 A strong and healthy ecosystem needs in part a wide base to stand upon. Biodiversity, the range of many different plants and insects and animals that make up an ecosystem, is that base. Each creature relies on local conditions and roles which they have grown with for thousands of years. When one fails, another is ready to step into that role to continue ecosystem function. In the interest of increasing the ability of nature to resist change by humans, through land use and other means, it is vital that people do their part to increase biodiversity.
 
